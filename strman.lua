@@ -195,4 +195,59 @@ strman.endsWith = function (value, search)
 	return true;
 end
 
+strman.ensureright = function (value, substr)
+	return strman.append(value, substr);
+end
+
+strman.insert = function (value, substr, index)
+	local t = strman.str2table(value);
+	local ns = '';
+	for i=1,#t do
+		if i == index then
+			ns = ns .. substr .. t[i];
+		else
+			ns = ns .. t[i];
+		end
+	end
+	return ns;
+end
+
+strman.toLowerCase = function (value)
+	return string.lower(value);
+end
+
+strman.equal = function (stringA, stringB)
+	return stringA == stringB;
+end
+
+strman.compare = function (stringA, stringB)
+	if stringA == stringB then
+		return 0;
+	end
+	if stringA > stringB then
+		return 1;
+	end
+	return -1;
+end
+
+strman.isLowerCase = function (value)
+	return value == strman.toLowerCase(value);
+end
+
+strman.removeEmptyStrings = function ( ... )
+	local t = {...};
+	local s = '';
+	for i=1,#t do
+		if " " == t[i] or '' == t[i] or nil == t[i] then
+		else
+			s = s .. t[i];
+		end
+	end
+	return s;
+end
+
+strman.param2table = function ( ... )
+	return {...};
+end
+
 return strman;
