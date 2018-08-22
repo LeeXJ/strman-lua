@@ -178,6 +178,7 @@ strman.indexOf = function (value, needle)
     		return i;
     	end
     end
+    return -1;
 end
 
 strman.isInteger = function (value)
@@ -248,6 +249,42 @@ end
 
 strman.param2table = function ( ... )
 	return {...};
+end
+
+strman.lastIndexOf = function (value, needle)
+	local t = strman.str2table(value);
+    local np = strman.str2table(needle);
+
+    for i=#t,1,-1 do
+    	local same = true;
+    	for j=1,#np do
+    		local index = i-j+1;
+    		if t[index] ~= np[#np-j+1] then
+    			same = false;
+    		end
+    	end
+    	if same then
+    		return i-#np+1;
+    	end
+    end
+    return -1;
+end
+
+strman.contains = function (value, needle)
+	local index = strman.indexOf(value, needle);
+	return index > -1;
+end
+
+strman.first = function (value, n)
+	return strman.substr(value, 1, n);
+end
+
+strman.isString = function (value)
+	if strman.isInteger(value) then
+		return false;
+	end
+
+	return type(value) == "string";
 end
 
 return strman;
