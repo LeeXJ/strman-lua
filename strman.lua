@@ -1,5 +1,16 @@
 strman = {};
 
+strman.Words = {["a"]=true, ["b"]=true, ["c"]=true, ["d"]=true, ["e"]=true, ["f"]=true, 
+				["g"]=true, ["h"]=true, ["i"]=true, ["j"]=true, ["k"]=true, ["l"]=true, 
+				["m"]=true, ["n"]=true, ["o"]=true, ["p"]=true, ["q"]=true, ["r"]=true,
+				["s"]=true, ["t"]=true, ["u"]=true, ["v"]=true, ["w"]=true, ["x"]=true,
+				["y"]=true, ["z"]=true,
+				["A"]=true, ["B"]=true, ["C"]=true, ["D"]=true, ["E"]=true, ["F"]=true, 
+				["G"]=true, ["H"]=true, ["I"]=true, ["J"]=true, ["K"]=true, ["L"]=true, 
+				["M"]=true, ["N"]=true, ["O"]=true, ["P"]=true, ["Q"]=true, ["R"]=true,
+				["S"]=true, ["T"]=true, ["U"]=true, ["V"]=true, ["W"]=true, ["X"]=true,
+				["Y"]=true, ["Z"]=true};
+
 strman.str2table = function (str)
      local t = {};
      local len  = string.len(str);
@@ -285,6 +296,43 @@ strman.isString = function (value)
 	end
 
 	return type(value) == "string";
+end
+
+strman.removeLeft = function (value, prefix)
+	local t = strman.str2table(prefix);
+	local vt = strman.str2table(value);
+	return strman.substr(value, #t+1, #vt);
+end
+
+strman.at = function(value, index)
+	local t = strman.str2table(value);
+	return t[index];
+end
+
+strman.containsAll = function (value, needles)
+	for i=1,#needles do
+		if not strman.contains(value, needles[i]) then
+			return false;
+		end
+	end
+	return true;
+end
+
+strman.format = string.format;
+
+strman.isUpperCase = function (value)
+	return value == strman.toUpperCase(value);
+end
+
+strman.removeNoWords = function(value)
+	local t = strman.str2table(value);
+	local nt = {};
+	for i=1,#t do
+		if strman.Words[t[i]] == true then
+			nt[#nt+1] = t[i];
+		end
+	end
+	return table.concat(nt);
 end
 
 return strman;
